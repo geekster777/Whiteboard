@@ -4,6 +4,10 @@ var fs = require('fs');
 var publicDir = '/public';
 
 http.createServer(function(req, res) {
+  if(req.url || req.url == '/') {
+    req.url = '/index.html';
+  }
+
   console.log(req.url);
   if(req.url.indexOf('/api') == 0) {
     res.writeHead(200, {"ContentType":"text/plain"});
