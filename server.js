@@ -4,7 +4,7 @@ var fs = require('fs');
 var publicDir = '/public';
 
 http.createServer(function(req, res) {
-  if(req.url || req.url == '/') {
+  if(!req.url || req.url == '/') {
     req.url = '/index.html';
   }
 
