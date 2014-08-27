@@ -1,9 +1,23 @@
 var http = require('http');
 var fs = require('fs');
+var path = require('path');
+var io = require('socket.io');
 
 var publicDir = '/public';
 
-http.createServer(function(req, res) {
+var mimeTypes = {
+  "html": "text/html",
+  "jpeg": "image/jpeg",
+  "jpg": "image/jpeg",
+  "png": "image/png",
+  "js": "text/javascript",
+  "css": "text/css"};
+
+function getExtension(filename) {
+  return path.extname(filename).split(".").reverse()[0];
+}
+
+var app = http.createServer(function(req, res) {
   if(!req.url || req.url == '/') {
     req.url = '/index.html';
   }
@@ -22,8 +36,22 @@ http.createServer(function(req, res) {
         return;
       }
       
-      res.writeHead(200, {'ContentType':'text/html'});
+      var mimeType = mimeTypes[getExtension(req.url)]
+
+      res.writeHead(200, {'ContentType':mimeType});
       res.end(data);
     });
   }
-}).listen(80);
+});
+
+io = io.listen(app);
+
+io.on('connect',function(socket) {
+  socket.on('draw', function(data) {
+    socket.emit('draw',data);
+  });
+});
+
+app.listen(80);
+
+console.log('Listening on port 80.');

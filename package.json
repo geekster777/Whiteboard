@@ -1,0 +1,10 @@
+{
+  "name": "Whiteboard",
+  "version": "0.0.1",
+  "description": "A simple whiteboard app for my kindle touch.",
+  "main": "server.js",
+  "author": "Nick Hilton",
+  "dependencies": {
+    "socket.io": "1.*"
+  }
+} 
