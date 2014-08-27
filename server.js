@@ -47,8 +47,9 @@ var app = http.createServer(function(req, res) {
 io = io.listen(app);
 
 io.on('connect',function(socket) {
+  socket.emit('connected');
   socket.on('draw', function(data) {
-    socket.emit('draw',data);
+    io.sockets.emit('draw',data);
   });
 });
 
