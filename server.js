@@ -49,7 +49,7 @@ io = io.listen(app);
 io.on('connect',function(socket) {
   socket.emit('connected');
   socket.on('draw', function(data) {
-    io.sockets.emit('draw',data);
+    socket.broadcast.emit('draw',data);
   });
 });
 
