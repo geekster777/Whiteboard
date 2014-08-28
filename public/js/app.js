@@ -1,7 +1,7 @@
 //Gets the offset of an element relative to the top left corner of the screen
 Element.prototype.screenOffset = function () {
-  var x = this.offsetLeft;
-  var y = this.offsetTop;
+  var x = this.offsetLeft - window.pageXOffset;
+  var y = this.offsetTop - window.pageYOffset;
 
   var element = this.offsetParent;
 
@@ -47,6 +47,8 @@ window.onload = function() {
   //toggles whether or not you are dragging the mouse
   whiteboard.onmousedown = function(e) {
     dragging = 1;
+
+    //gets an updated position of the mouse
     posX = e.clientX || e.pageX;
     posY = e.clientY || e.pageY;
     var whiteboardOffset = whiteboard.screenOffset();
